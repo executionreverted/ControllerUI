@@ -1,0 +1,110 @@
+html,
+body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #222;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  width: 90%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.styledKnob circle,
+.styledKnob path {
+  fill: #1ac92c;
+  opacity: 0.4;
+  transition:
+    opacity 100ms,
+    color 100ms ease-in-out;
+}
+
+.styledKnob:hover circle,
+.styledKnob:hover path,
+.styledKnob:focus circle,
+.styledKnob:focus path {
+  fill: #c210c2;
+  opacity: 1;
+  transition:
+    opacity 450ms,
+    color 450ms ease-in-out;
+}
+
+.toggle {
+  border: 2px solid #11a11f;
+  background: #1ac92c;
+  padding: 1em 1.5em;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-bottom: 1em;
+  font-size: 14px;
+}
+
+.toggle.inactive {
+  background-color: #c210c2;
+  border-color: #c210c2;
+}
+
+.knobs-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1rem 0
+}
+
+.knobs-grid .knob- {
+  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.knobs-grid .value {
+  color: white;
+  font-size: 16px;
+}
+.disabled {
+  pointer-events: none;
+}
+
+.disabled circle {
+  fill: grey
+}
+
+.mt-5{
+  margin-top: 2rem;
+}
+
+
+@media screen and (max-width:768px) {
+  .knobs-grid .knob- {
+    flex-basis: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
