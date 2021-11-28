@@ -61,9 +61,9 @@ function Home() {
 
     if (!isConnected) {
       // @ts-ignore
-      window?.ethereum?.enable().then(() => location.reload())
+      window?.ethereum?.enable()
     }
-    if(chainId !== APP_CHAIN_ID) {
+    if(chainId && chainId !== APP_CHAIN_ID) {
       // @ts-ignore
       window.ethereum.request({
         method: "wallet_addEthereumChain",
