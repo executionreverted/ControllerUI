@@ -135,8 +135,12 @@ function Home() {
     render={({ state, fullpageApi }) => {
       return (
         <ReactFullpage.Wrapper>
-        
 
+          <div className="section">
+            <h1>
+              HELLO
+            </h1>
+          </div>
           <div className="main section">
             {isConnected && params && (
               <><div className="knobs-grid">
