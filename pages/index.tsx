@@ -14,6 +14,33 @@ import ReactFullpage from '@fullpage/react-fullpage';
 import { Donut } from 'react-dial-knob'
 
 
+const switchChain = async () => {
+  // @ts-ignore
+  await window.ethereum.request({
+    method: "wallet_addEthereumChain",
+    params: [{
+      chainId: "0xa869",
+      chainName: "Avalanche Fuji Testnet",
+      nativeCurrency: {
+        name: "AVAX",
+        symbol: "AVAX",
+        decimals: 18
+      },
+      rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+      blockExplorerUrls: ["https://cchain.explorer.avax-test.network"]
+    }]
+  })
+    .then(res => {
+      setTimeout(() => {
+        console.log('Successfully connected to c-chain...')
+        location.reload()
+      }, 1000)
+    })
+    .catch(err => {
+      
+    });
+}
+
 function Home() {
   const { account, library, chainId } = useWeb3React();
 
@@ -40,22 +67,25 @@ function Home() {
   useEffect(() => {
     if (contract && isConnected) {
       if (!params) {
-        contract.getAllParamStruct().then(res => {
-          const parsed = []
-          for (let index = 0; index < 8; index++) {
-            parsed.push({
-              value: parseInt(res[index].value),
-              maxVal: parseInt(res[index].maxVal),
-              minVal: parseInt(res[index].minVal)
-            })
-          }
-          setParams(parsed)
-          console.log(parsed);
-        })
-
-        contract._section().then(res => {
-          setSection(res)
-        })
+        try {
+          contract.getAllParamStruct().then(res => {
+            const parsed = []
+            for (let index = 0; index < 8; index++) {
+              parsed.push({
+                value: parseInt(res[index].value),
+                maxVal: parseInt(res[index].maxVal),
+                minVal: parseInt(res[index].minVal)
+              })
+            }
+            setParams(parsed)
+            console.log(parsed);
+          }).catch(e => console.log(e))
+          contract._section().then(res => {
+            setSection(res)
+          }).catch(e => console.log(e))
+        } catch (e) {
+          console.log(e);
+        }
       }
     }
 
@@ -63,32 +93,9 @@ function Home() {
       // @ts-ignore
       window?.ethereum?.enable()
     }
+
     if (chainId && chainId !== APP_CHAIN_ID) {
-      // @ts-ignore
-      window.ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [{
-          chainId: "0xa869",
-          chainName: "Avalanche Fuji Testnet",
-          nativeCurrency: {
-            name: "AVAX",
-            symbol: "AVAX",
-            decimals: 18
-          },
-          rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
-          blockExplorerUrls: ["https://cchain.explorer.avax-test.network"]
-        }]
-      })
-        .then(res => {
-          setTimeout(() => {
-            console.log('Successfully connected to c-chain...')
-            location.reload()
-          }, 1000)
-        })
-        .catch(err => {
-          alert("User Declined The Request")
-          location.reload()
-        });
+      switchChain()
     }
 
 
@@ -128,81 +135,85 @@ function Home() {
     })
   }
 
-  return <ReactFullpage
-    //fullpage options
-    licenseKey={'YOUR_KEY_HERE'}
-    scrollingSpeed={1000} /* Options here */
-    render={({ state, fullpageApi }) => {
-      return (
-        <ReactFullpage.Wrapper>
+  return <div className="main">
+    {
+      !isConnected && <div className="center">
+        <button onClick={() => {
+          // @ts-ignore
+          window.ethereum?.enable()?.then(() => location.reload())
+        }} className="toggle mt-5">
+          SIGN IN WITH METAMASK
+        </button>
+      </div>
+    }
+    {
+      chainId && chainId !== APP_CHAIN_ID && <div className="center">
+        <button onClick={() => {
+          // @ts-ignore
+          switchChain()
+        }} className="toggle mt-5">
+          CONNECT TO AVALANCHE C-CHAIN
+        </button>
+      </div>
+    }
 
-          <div className="section">
-            <h1>
-              HELLO
-            </h1>
-          </div>
-          <div className="main section">
-            {isConnected && params && (
-              <><div className="knobs-grid">
-                {
-                  knobs.map(knob => <div key={knob} className="knob-">
-                    <Donut
-                      diameter={100}
-                      value={params[knob]?.value}
-                      max={parseInt(params[knob]?.maxVal)}
-                      min={parseInt(params[knob]?.minVal)}
-                      step={1}
-                      theme={{
-                        donutColor: activeParams[knob] ? "#1ac92c" : "grey",
-                        donutThickness: 15,
-                      }}
-                      onValueChange={(e) => {
-                        if (!activeParams[knob]) return
-                        setParams(prev => {
-                          console.log(prev);
-                          const newParams = Object.assign({}, prev)
-                          newParams[knob].value = e
-                          return newParams
-                        })
-                      }}
-                      ariaLabelledBy={knob?.toFixed()}
-                    >
-                    </Donut>
-                    <button onClick={() => {
-                      if (!activeParams[knob]) {
-                        let totalEnabled = 0;
-                        for (let index = 0; index < 7; index++) {
-                          if (activeParams[index]) totalEnabled++;
-                        }
-                        if (totalEnabled >= parseInt(section.numParams)) {
-                          console.log("Max. params reached.");
-                          return
-                        }
-                      }
-
-                      setParamActive(prev => {
-                        const newParams = Object.assign({}, prev)
-                        newParams[knob] = !newParams[knob]
-                        return newParams
-                      })
-                    }} className={`${activeParams[knob] ? `toggle` : `toggle inactive`}`}>
-                      Toggle
-                    </button>
-                  </div>)
+    {params && (
+      <div><div className="knobs-grid">
+        {
+          knobs?.map(knob => <div key={knob} className="knob-">
+            <Donut
+              diameter={100}
+              value={params[knob]?.value}
+              max={parseInt(params[knob]?.maxVal)}
+              min={parseInt(params[knob]?.minVal)}
+              step={1}
+              theme={{
+                donutColor: activeParams[knob] ? "#1ac92c" : "grey",
+                donutThickness: 15,
+              }}
+              onValueChange={(e) => {
+                if (!activeParams[knob]) return
+                setParams(prev => {
+                  console.log(prev);
+                  const newParams = Object.assign({}, prev)
+                  newParams[knob].value = e
+                  return newParams
+                })
+              }}
+              ariaLabelledBy={knob?.toFixed()}
+            >
+            </Donut>
+            <button onClick={() => {
+              if (!activeParams[knob]) {
+                let totalEnabled = 0;
+                for (let index = 0; index < 7; index++) {
+                  if (activeParams[index]) totalEnabled++;
                 }
-              </div>
-                <div className="center">
-                  <button onClick={save} className="toggle mt-5">
-                    SAVE NEW PARAMETERS
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </ReactFullpage.Wrapper>
-      );
-    }}
-  />
+                if (totalEnabled >= parseInt(section.numParams)) {
+                  console.log("Max. params reached.");
+                  return
+                }
+              }
+
+              setParamActive(prev => {
+                const newParams = Object.assign({}, prev)
+                newParams[knob] = !newParams[knob]
+                return newParams
+              })
+            }} className={`${activeParams[knob] ? `toggle` : `toggle inactive`}`}>
+              Toggle
+            </button>
+          </div>)
+        }
+      </div>
+        <div className="center">
+          <button onClick={save} className="toggle mt-5">
+            SAVE NEW PARAMETERS
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
 }
 
 export default Home;
