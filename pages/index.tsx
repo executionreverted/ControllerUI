@@ -10,8 +10,8 @@ import { CONTRACT_ABI } from "../contracts/ABI";
 import useContract from "../hooks/useContract";
 import useEagerConnect from "../hooks/useEagerConnect";
 import { CONTRACT_ADDRESS } from "../util";
+import ReactFullpage from '@fullpage/react-fullpage';
 
-const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
 
 function Home() {
   const { account, library } = useWeb3React();
@@ -94,72 +94,62 @@ function Home() {
   }
 
   return (
-    <div>
-      <Head>
-        <title>next-web3-boilerplate</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <ReactFullpage.Wrapper>
+        <Head>
+          <title>next-web3-boilerplate</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <main>
-        {isConnected && params && (
-          <><div className="knobs-grid">
-            {
-              knobs.map(knob => <div key={knob} className="knob-">
-                <button onClick={() => {
-                  if (!activeParams[knob]) {
-                    let totalEnabled = 0;
-                    for (let index = 0; index < 7; index++) {
-                      if (activeParams[index]) totalEnabled++;
+        <main>
+          {isConnected && params && (
+            <><div className="knobs-grid">
+              {
+                knobs.map(knob => <div key={knob} className="knob-">
+                  <button onClick={() => {
+                    if (!activeParams[knob]) {
+                      let totalEnabled = 0;
+                      for (let index = 0; index < 7; index++) {
+                        if (activeParams[index]) totalEnabled++;
+                      }
+                      if (totalEnabled >= parseInt(section.numParams)) {
+                        console.log("Max. params reached.");
+                        return
+                      }
                     }
-                    if (totalEnabled >= parseInt(section.numParams)) {
-                      console.log("Max. params reached.");
-                      return
-                    }
-                  }
 
-                  setParamActive(prev => {
-                    const newParams = Object.assign({}, prev)
-                    newParams[knob] = !newParams[knob]
-                    return newParams
-                  })
-                }} className={`${activeParams[knob] ? `toggle` : `toggle inactive`}`}>
-                  Toggle
-                </button>
-                <CustomKnob initialValue={params[knob]?.value}
-                  max={parseInt(params[knob]?.maxVal)}
-                  min={parseInt(params[knob]?.minVal)}
-                  disabled={!activeParams[knob]} onChange={(e) => {
-
-                    setParams(prev => {
-                      console.log(prev);
+                    setParamActive(prev => {
                       const newParams = Object.assign({}, prev)
-                      newParams[knob].value = e
+                      newParams[knob] = !newParams[knob]
                       return newParams
                     })
-                  }} />
-              </div>)
-            }
-          </div>
-            <div>
-              <button onClick={save} className="toggle mt-5">
-                SAVE NEW PARAMETERS
-              </button>
+                  }} className={`${activeParams[knob] ? `toggle` : `toggle inactive`}`}>
+                    Toggle
+                  </button>
+                  <CustomKnob initialValue={params[knob]?.value}
+                    max={parseInt(params[knob]?.maxVal)}
+                    min={parseInt(params[knob]?.minVal)}
+                    disabled={!activeParams[knob]} onChange={(e) => {
+
+                      setParams(prev => {
+                        console.log(prev);
+                        const newParams = Object.assign({}, prev)
+                        newParams[knob].value = e
+                        return newParams
+                      })
+                    }} />
+                </div>)
+              }
             </div>
-          </>
-        )}
-      </main>
+              <div className="center">
+                <button onClick={save} className="toggle mt-5">
+                  SAVE NEW PARAMETERS
+                </button>
+              </div>
+            </>
+          )}
+        </main>
+    </ReactFullpage.Wrapper>
 
-      <style jsx>{`
-        nav {
-          display: flex;
-          justify-content: space-between;
-        }
-
-        main {
-          text-align: center;
-        }
-      `}</style>
-    </div>
   );
 }
 

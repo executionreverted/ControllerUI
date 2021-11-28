@@ -29,7 +29,9 @@ main {
   margin: 0 auto;
   padding: 1rem;
 }
-
+.styledKnob{
+  transform: scale(.8);
+}
 .styledKnob circle,
 .styledKnob path {
   fill: #1ac92c;
@@ -53,12 +55,12 @@ main {
 .toggle {
   border: 2px solid #11a11f;
   background: #1ac92c;
-  padding: 1em 1.5em;
+  padding: .5em 1em;
   color: #fff;
   text-transform: uppercase;
   cursor: pointer;
   margin-bottom: 1em;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .toggle.inactive {
@@ -72,7 +74,7 @@ main {
   justify-content: space-around;
   flex-wrap: wrap;
   width: 100%;
-  gap: 1rem 0
+  gap: .25rem 0
 }
 
 .knobs-grid .knob- {
@@ -95,7 +97,12 @@ main {
 }
 
 .mt-5{
-  margin-top: 2rem;
+  margin-top: 1rem;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
