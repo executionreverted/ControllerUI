@@ -57,6 +57,11 @@ function Home() {
         })
       }
     }
+
+    if(!isConnected) {
+      // @ts-ignore
+      window?.ethereum?.enable()
+    }
   }, [isConnected, contract])
 
   const save = async () => {
