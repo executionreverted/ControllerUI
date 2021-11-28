@@ -39,3 +39,4 @@ export const parseBalance = (
 
 
 export const CONTRACT_ADDRESS = "0x4b440c800d74ee797010b3a08d535d9491a1cd1b"
+export const APP_CHAIN_ID = 43113

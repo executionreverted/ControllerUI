@@ -9,12 +9,13 @@ import TokenBalance from "../components/TokenBalance";
 import { CONTRACT_ABI } from "../contracts/ABI";
 import useContract from "../hooks/useContract";
 import useEagerConnect from "../hooks/useEagerConnect";
-import { CONTRACT_ADDRESS } from "../util";
+import { APP_CHAIN_ID, CONTRACT_ADDRESS } from "../util";
 import ReactFullpage from '@fullpage/react-fullpage';
+import { Donut } from 'react-dial-knob'
 
 
 function Home() {
-  const { account, library } = useWeb3React();
+  const { account, library, chainId } = useWeb3React();
 
   const triedToEagerConnect = useEagerConnect();
 
@@ -58,10 +59,39 @@ function Home() {
       }
     }
 
-    if(!isConnected) {
+    if (!isConnected) {
       // @ts-ignore
-      window?.ethereum?.enable()
+      window?.ethereum?.enable().then(() => location.reload())
     }
+    if(chainId !== APP_CHAIN_ID) {
+      // @ts-ignore
+      window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [{
+            chainId: "0xa869",
+            chainName: "Avalanche Fuji Testnet",
+            nativeCurrency: {
+                name: "AVAX",
+                symbol: "AVAX",
+                decimals: 18
+            },
+            rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+            blockExplorerUrls: ["https://cchain.explorer.avax-test.network"]
+        }]
+    })
+        .then(res => {
+            setTimeout(() => {
+                console.log('Successfully connected to c-chain...')
+                location.reload()
+            }, 1000)
+        })
+        .catch(err => {
+            alert("User Declined The Request")
+            location.reload()
+        });
+    }
+
+
   }, [isConnected, contract])
 
   const save = async () => {
@@ -100,59 +130,71 @@ function Home() {
 
   return (
     <ReactFullpage.Wrapper>
-        <Head>
-          <title>next-web3-boilerplate</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+      <Head>
+        <title>next-web3-boilerplate</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-        <main>
-          {isConnected && params && (
-            <><div className="knobs-grid">
-              {
-                knobs.map(knob => <div key={knob} className="knob-">
-                  <button onClick={() => {
-                    if (!activeParams[knob]) {
-                      let totalEnabled = 0;
-                      for (let index = 0; index < 7; index++) {
-                        if (activeParams[index]) totalEnabled++;
-                      }
-                      if (totalEnabled >= parseInt(section.numParams)) {
-                        console.log("Max. params reached.");
-                        return
-                      }
+      <main>
+        {isConnected && params && (
+          <><div className="knobs-grid">
+            {
+              knobs.map(knob => <div key={knob} className="knob-">
+                <button onClick={() => {
+                  if (!activeParams[knob]) {
+                    let totalEnabled = 0;
+                    for (let index = 0; index < 7; index++) {
+                      if (activeParams[index]) totalEnabled++;
                     }
+                    if (totalEnabled >= parseInt(section.numParams)) {
+                      console.log("Max. params reached.");
+                      return
+                    }
+                  }
 
-                    setParamActive(prev => {
+                  setParamActive(prev => {
+                    const newParams = Object.assign({}, prev)
+                    newParams[knob] = !newParams[knob]
+                    return newParams
+                  })
+                }} className={`${activeParams[knob] ? `toggle` : `toggle inactive`}`}>
+                  Toggle
+                </button>
+                <Donut
+                  diameter={100}
+                  value={params[knob]?.value}
+                  max={parseInt(params[knob]?.maxVal)}
+                  min={parseInt(params[knob]?.minVal)}
+                  step={1}
+                  theme={{
+                    donutColor: '#1ac92c',
+                    donutThickness:15
+                  }}
+        
+                  onValueChange={(e) => {
+                    if(!activeParams[knob]) return
+                    setParams(prev => {
+                      console.log(prev);
                       const newParams = Object.assign({}, prev)
-                      newParams[knob] = !newParams[knob]
+                      newParams[knob].value = e
                       return newParams
                     })
-                  }} className={`${activeParams[knob] ? `toggle` : `toggle inactive`}`}>
-                    Toggle
-                  </button>
-                  <CustomKnob initialValue={params[knob]?.value}
-                    max={parseInt(params[knob]?.maxVal)}
-                    min={parseInt(params[knob]?.minVal)}
-                    disabled={!activeParams[knob]} onChange={(e) => {
+                  }}
+                  ariaLabelledBy={'my-label'}
+                >
+                </Donut>
 
-                      setParams(prev => {
-                        console.log(prev);
-                        const newParams = Object.assign({}, prev)
-                        newParams[knob].value = e
-                        return newParams
-                      })
-                    }} />
-                </div>)
-              }
+              </div>)
+            }
+          </div>
+            <div className="center">
+              <button onClick={save} className="toggle mt-5">
+                SAVE NEW PARAMETERS
+              </button>
             </div>
-              <div className="center">
-                <button onClick={save} className="toggle mt-5">
-                  SAVE NEW PARAMETERS
-                </button>
-              </div>
-            </>
-          )}
-        </main>
+          </>
+        )}
+      </main>
     </ReactFullpage.Wrapper>
 
   );
