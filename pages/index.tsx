@@ -1,219 +1,68 @@
-import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import Account from "../components/Account";
-import CustomKnob from "../components/CustomKnob";
-import ETHBalance from "../components/ETHBalance";
-import TokenBalance from "../components/TokenBalance";
-import { CONTRACT_ABI } from "../contracts/ABI";
-import useContract from "../hooks/useContract";
+import { useWeb3React } from "@web3-react/core"
+import Link from "next/link"
+import Navbar from "../components/Menu"
 import useEagerConnect from "../hooks/useEagerConnect";
-import { APP_CHAIN_ID, CONTRACT_ADDRESS } from "../util";
-import ReactFullpage from '@fullpage/react-fullpage';
-import { Donut } from 'react-dial-knob'
+import { APP_CHAIN_ID, switchChain } from "../util";
 
+export default function HomePage() {
+    const triedToEagerConnect = useEagerConnect();
+    const { account, library, chainId } = useWeb3React();
 
-const switchChain = async () => {
-  // @ts-ignore
-  await window.ethereum.request({
-    method: "wallet_addEthereumChain",
-    params: [{
-      chainId: "0xa869",
-      chainName: "Avalanche Fuji Testnet",
-      nativeCurrency: {
-        name: "AVAX",
-        symbol: "AVAX",
-        decimals: 18
-      },
-      rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
-      blockExplorerUrls: ["https://cchain.explorer.avax-test.network"]
-    }]
-  })
-    .then(res => {
-      setTimeout(() => {
-        console.log('Successfully connected to c-chain...')
-        location.reload()
-      }, 1000)
-    })
-    .catch(err => {
-      
-    });
-}
-
-function Home() {
-  const { account, library, chainId } = useWeb3React();
-
-  const triedToEagerConnect = useEagerConnect();
-
-  const isConnected = typeof account === "string" && !!library;
-
-  const [activeParams, setParamActive] = useState({
-    0: false,
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-    6: false,
-    7: false
-  })
-  const [params, setParams] = useState(null)
-  const [section, setSection] = useState(null)
-  const knobs = [0, 1, 2, 3, 4, 5, 6, 7]
-
-  const contract = useContract(CONTRACT_ADDRESS, CONTRACT_ABI)
-
-  useEffect(() => {
-    if (contract && isConnected) {
-      if (!params) {
-        try {
-          contract.getAllParamStruct().then(res => {
-            const parsed = []
-            for (let index = 0; index < 8; index++) {
-              parsed.push({
-                value: parseInt(res[index].value),
-                maxVal: parseInt(res[index].maxVal),
-                minVal: parseInt(res[index].minVal)
-              })
-            }
-            setParams(parsed)
-            console.log(parsed);
-          }).catch(e => console.log(e))
-          contract._section().then(res => {
-            setSection(res)
-          }).catch(e => console.log(e))
-        } catch (e) {
-          console.log(e);
+    const isConnected = typeof account === "string" && !!library;
+    const connect = () => {
+        if (!isConnected) {
+            console.log('login.');
+            // @ts-ignore
+            window?.ethereum?.enable()
         }
-      }
-    }
-
-    if (!isConnected) {
-      // @ts-ignore
-      window?.ethereum?.enable()
-    }
-
-    if (chainId && chainId !== APP_CHAIN_ID) {
-      switchChain()
-    }
-
-
-  }, [isConnected, contract])
-
-  const save = async () => {
-
-    /*
-    struct ParamChange {
-        uint id;
-        uint value;
-    }
-    */
-
-    let payload = []
-    for (let index = 0; index < 8; index++) {
-      if (activeParams[index]) {
-        payload.push({
-          id: index,
-          value: parseInt(params[index].value)
-        });
-      }
-    }
-    console.log(payload);
-
-    const tx = await contract.changeParameterMulti(payload)
-    await tx.wait(2)
-    setParamActive({
-      0: false,
-      1: false,
-      2: false,
-      3: false,
-      4: false,
-      5: false,
-      6: false,
-      7: false
-    })
-  }
-
-  return <div className="main">
-    {
-      !isConnected && <div className="center">
-        <button onClick={() => {
-          // @ts-ignore
-          window.ethereum?.enable()?.then(() => location.reload())
-        }} className="toggle mt-5">
-          SIGN IN WITH METAMASK
-        </button>
-      </div>
-    }
-    {
-      chainId && chainId !== APP_CHAIN_ID && <div className="center">
-        <button onClick={() => {
-          // @ts-ignore
-          switchChain()
-        }} className="toggle mt-5">
-          CONNECT TO AVALANCHE C-CHAIN
-        </button>
-      </div>
-    }
-
-    {params && (
-      <div><div className="knobs-grid">
-        {
-          knobs?.map(knob => <div key={knob} className="knob-">
-            <Donut
-              diameter={100}
-              value={params[knob]?.value}
-              max={parseInt(params[knob]?.maxVal)}
-              min={parseInt(params[knob]?.minVal)}
-              step={1}
-              theme={{
-                donutColor: activeParams[knob] ? "#1ac92c" : "grey",
-                donutThickness: 15,
-              }}
-              onValueChange={(e) => {
-                if (!activeParams[knob]) return
-                setParams(prev => {
-                  console.log(prev);
-                  const newParams = Object.assign({}, prev)
-                  newParams[knob].value = e
-                  return newParams
-                })
-              }}
-              ariaLabelledBy={knob?.toFixed()}
-            >
-            </Donut>
-            <button onClick={() => {
-              if (!activeParams[knob]) {
-                let totalEnabled = 0;
-                for (let index = 0; index < 7; index++) {
-                  if (activeParams[index]) totalEnabled++;
-                }
-                if (totalEnabled >= parseInt(section.numParams)) {
-                  console.log("Max. params reached.");
-                  return
-                }
-              }
-
-              setParamActive(prev => {
-                const newParams = Object.assign({}, prev)
-                newParams[knob] = !newParams[knob]
-                return newParams
-              })
-            }} className={`${activeParams[knob] ? `toggle` : `toggle inactive`}`}>
-              Toggle
-            </button>
-          </div>)
+        if (chainId && chainId !== APP_CHAIN_ID) {
+            switchChain()
         }
-      </div>
-        <div className="center">
-          <button onClick={save} className="toggle mt-5">
-            SAVE NEW PARAMETERS
-          </button>
+    }
+    return <>
+        <Navbar rightChain={chainId && chainId == APP_CHAIN_ID} isConnected={isConnected} connect={connect} />
+        <div className="container">
+            <div className="home">
+                <h1>
+                    Lorem, ipsum dolor.
+                </h1>
+                <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam labore voluptatum eum quasi! Dolorum aperiam excepturi ducimus assumenda voluptatum praesentium quasi, amet fugiat suscipit neque exercitationem modi fugit earum odit ratione? Voluptate sunt fuga voluptates possimus doloribus rem iusto nemo quia, recusandae eveniet commodi esse vitae omnis animi doloremque officiis repudiandae qui illum nihil. Vero, facilis eius facere nam error excepturi saepe modi mollitia similique labore quibusdam incidunt ex ab explicabo accusantium rem animi sunt distinctio quia voluptate ipsam dolorum beatae, natus repudiandae. Ad porro quibusdam odit assumenda est iste, placeat, animi libero repudiandae sunt, quod possimus dignissimos in ut?
+                </p>
+            </div>
+            <div id="#about" className="about">
+                <h1>
+                    Lorem, ipsum dolor sit About.
+                </h1>
+                <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam labore voluptatum eum quasi! Dolorum aperiam excepturi ducimus assumenda voluptatum praesentium quasi, amet fugiat suscipit neque exercitationem modi fugit earum odit ratione? Voluptate sunt fuga voluptates possimus doloribus rem iusto nemo quia, recusandae eveniet commodi esse vitae omnis animi doloremque officiis repudiandae qui illum nihil. Vero, facilis eius facere nam error excepturi saepe modi mollitia similique labore quibusdam incidunt ex ab explicabo accusantium rem animi sunt distinctio quia voluptate ipsam dolorum beatae, natus repudiandae. Ad porro quibusdam odit assumenda est iste, placeat, animi libero repudiandae sunt, quod possimus dignissimos in ut?
+                </p>
+            </div>
+            <div id="#team" className="team">
+                <h1>
+                    TEAM
+                </h1>
+                <ul className="team-members">
+                    <li>
+                        <img src="https://ipfs.infura.io/ipfs/QmPfXnN7gneZu5eVRcZgwMpmfo2XZhQnzWWbpVsAGktG1x" alt="" />
+                        <div>
+                            BERK ÖZDEMİR
+                        </div>
+                    </li>
+                    <li>
+                        <img src="https://ipfs.infura.io/ipfs/QmPfXnN7gneZu5eVRcZgwMpmfo2XZhQnzWWbpVsAGktG1x" alt="" />
+                        <div>
+                            CANER SEVİNCE
+                        </div>
+                    </li>
+                    <li>
+                        <img src="https://ipfs.infura.io/ipfs/QmPfXnN7gneZu5eVRcZgwMpmfo2XZhQnzWWbpVsAGktG1x" alt="" />
+                        <div>
+                            İBRAHİM SEFA TUNA
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
-    )}
-  </div>
+    </>
 }
-
-export default Home;

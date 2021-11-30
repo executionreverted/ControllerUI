@@ -40,3 +40,29 @@ export const parseBalance = (
 
 export const CONTRACT_ADDRESS = "0x4b440c800d74ee797010b3a08d535d9491a1cd1b"
 export const APP_CHAIN_ID = 43113
+export const switchChain = async () => {
+  // @ts-ignore
+  await window.ethereum.request({
+    method: "wallet_addEthereumChain",
+    params: [{
+      chainId: "0xa869",
+      chainName: "Avalanche Fuji Testnet",
+      nativeCurrency: {
+        name: "AVAX",
+        symbol: "AVAX",
+        decimals: 18
+      },
+      rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+      blockExplorerUrls: ["https://cchain.explorer.avax-test.network"]
+    }]
+  })
+    .then(res => {
+      setTimeout(() => {
+        console.log('Successfully connected to c-chain...')
+        location.reload()
+      }, 1000)
+    })
+    .catch(err => {
+
+    });
+}
