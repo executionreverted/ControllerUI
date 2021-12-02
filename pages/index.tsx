@@ -19,6 +19,7 @@ export default function HomePage() {
             switchChain()
         }
     }
+    
     return <>
         <Navbar rightChain={chainId && chainId == APP_CHAIN_ID} isConnected={isConnected} connect={connect} />
         <div className="container">

@@ -49,7 +49,9 @@ var styles = {
 export default function Navbar({ rightChain, isConnected, connect }) {
     return <Menu styles={styles} right={true}>
         <div className="nav-links menu-item">
-            <a id="home" className="menu-item" href="/">Home</a>
+            <Link href="/edit">
+                <a id="home" className="menu-item" href="/">Home</a>
+            </Link>
             <a id="about" className="menu-item" href="#about">About</a>
             <Link href="/edit">
                 <a id="play" className="menu-item--small" href="">Play</a>
