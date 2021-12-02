@@ -50,13 +50,18 @@ export default function Navbar({ rightChain, isConnected, connect }) {
     return <Menu styles={styles} right={true}>
         <div className="nav-links menu-item">
             <Link href="/">
-                <a id="home" className="menu-item" href="/">Home</a>
+                <a id="home" className="menu-item" href="">Home</a>
             </Link>
-            <a id="about" className="menu-item" href="#about">About</a>
+            <Link href="/#about">
+                <a id="" className="menu-item" href="">About</a>
+            </Link>
             <Link href="/edit">
                 <a id="play" className="menu-item--small" href="">Play</a>
             </Link>
-            <a id="team" className="menu-item--small" href="#team">Team</a>
+            <Link href="/#team">
+                <a id="team" className="menu-item--small" href="">Team</a>
+            </Link>
+
 
             {!isConnected && <button onClick={(e) => {
                 e.preventDefault()
