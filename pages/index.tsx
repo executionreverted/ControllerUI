@@ -100,24 +100,38 @@ export default function HomePage() {
                     TEAM
                 </h1>
                 <ul className="team-members">
-                    <li>
-                        <img src="https://ipfs.infura.io/ipfs/QmPfXnN7gneZu5eVRcZgwMpmfo2XZhQnzWWbpVsAGktG1x" alt="" />
-                        <div>
-                            BERK ÖZDEMİR
-                        </div>
-                    </li>
-                    <li>
-                        <img src="https://ipfs.infura.io/ipfs/QmPfXnN7gneZu5eVRcZgwMpmfo2XZhQnzWWbpVsAGktG1x" alt="" />
-                        <div>
-                            CANER SEVİNCE
-                        </div>
-                    </li>
-                    <li>
-                        <img src="https://ipfs.infura.io/ipfs/QmPfXnN7gneZu5eVRcZgwMpmfo2XZhQnzWWbpVsAGktG1x" alt="" />
-                        <div>
-                            İBRAHİM SEFA TUNA
-                        </div>
-                    </li>
+                    <a href="https://twitter.com/berkozdemir" target="_blank" rel="norefferer">
+                        <li>
+                            <img src="https://pbs.twimg.com/profile_images/1458250273454018561/7CETcoMd_400x400.jpg" alt="" />
+                            <div>
+                                BERK ÖZDEMİR
+                            </div>
+                        </li>
+                    </a>
+                    <a target="_blank" rel="norefferer" href="https://twitter.com/memorycollect0r">
+                        <li>
+                            <img src="https://ipfs.infura.io/ipfs/QmPfXnN7gneZu5eVRcZgwMpmfo2XZhQnzWWbpVsAGktG1x" alt="" />
+                            <div>
+                                CANER SEVİNCE
+                            </div>
+                        </li>
+                    </a>
+                    <a href="https://twitter.com/isefatuna" target="_blank" rel="norefferer">
+                        <li>
+                            <img src="https://pbs.twimg.com/profile_images/1377347328353390593/Xl_qM96Y_400x400.jpg" alt="" />
+                            <div>
+                                İ. SEFA TUNA
+                            </div>
+                        </li>
+                    </a>
+                    <a href="https://twitter.com/yborayigit" target="_blank" rel="norefferer">
+                        <li>
+                            <img src="https://media.discordapp.net/attachments/443527321799098369/915934787808690226/sacma.png?width=582&height=582" alt="" />
+                            <div>
+                                Y. BORA YİĞİT
+                            </div>
+                        </li>
+                    </a>
                 </ul>
             </div>
         </div>

@@ -1,16 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@300;400;500&display=swap");
 
-html,
-body {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
+* {
   padding: 0;
   margin: 0;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  box-sizing: border-box;
+  font-family: "Azeret Mono", monospace !important;
+}
+html,
+body {
   background-color: #011936;
 }
 
@@ -19,10 +16,6 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
-  font-family: "Azeret Mono", monospace !important;
-}
 
 .main {
   padding: 1rem;
@@ -196,21 +189,27 @@ Note: Beware of modifying this element as it can break the animations - you shou
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  h1 {
+    margin-top: 1.5em;
+  }
   p {
     max-width: 90%;
     text-align: left;
     width: 100%;
     padding: 0 1rem;
     word-wrap: break-word;
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
 .team-members {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 1em;
+  gap: 2em 1em;
   list-style: none;
   li {
     img {
@@ -234,15 +233,10 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 .code {
-  padding-left: 2rem !important;
   color: #c0dfa1;
 }
 
 @media screen and (max-width: 768px) {
-  body {
-    overflow-x: hidden;
-    min-width: 100vw;
-  }
   .knobs-grid .knob- {
     flex-basis: 45%;
     display: flex;
@@ -257,18 +251,8 @@ Note: Beware of modifying this element as it can break the animations - you shou
   .home,
   .about,
   .team {
-    width: 100%;
-    text-align: center;
-    color: white;
-    margin-top: 2em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     p {
-      max-width: 80%;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 90%;
     }
   }
 
@@ -296,5 +280,11 @@ Note: Beware of modifying this element as it can break the animations - you shou
     right: 16px !important;
     top: 16px !important;
   }
-
+}
+ul {
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
