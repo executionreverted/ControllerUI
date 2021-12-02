@@ -46,7 +46,7 @@ function Edit() {
 
   }, [isConnected, contract])
 
-  const connectMetamask= () => {
+  const connectMetamask = () => {
     if (contract && isConnected) {
       if (!params) {
         try {
@@ -114,7 +114,7 @@ function Edit() {
     })
   }
 
-  return <div className="main">
+  return <div className="main edit">
     <Navbar rightChain={chainId == APP_CHAIN_ID} isConnected={isConnected} connect={connectMetamask} />
     {
       !isConnected && <div className="center">

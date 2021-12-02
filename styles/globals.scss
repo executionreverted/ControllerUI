@@ -104,15 +104,6 @@ a {
   transition: background-color 300ms ease;
 }
 
-@media screen and (max-width: 768px) {
-  .knobs-grid .knob- {
-    flex-basis: 45%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-}
 .bm-burger-button {
   position: fixed;
   width: 36px;
@@ -210,6 +201,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
     text-align: left;
     width: 100%;
     padding: 0 1rem;
+    word-wrap: break-word;
   }
 }
 
@@ -244,4 +236,65 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .code {
   padding-left: 2rem !important;
   color: #c0dfa1;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+    min-width: 100vw;
+  }
+  .knobs-grid .knob- {
+    flex-basis: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .home {
+    margin-top: 1rem;
+  }
+
+  .home,
+  .about,
+  .team {
+    width: 100%;
+    text-align: center;
+    color: white;
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    p {
+      max-width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .team {
+    li {
+      img {
+        max-width: 64px;
+      }
+    }
+  }
+
+  .container {
+    width: 100%;
+    padding: 0;
+  }
+
+  .edit {
+    margin-top: 1rem;
+  }
+
+  .bm-burger-button {
+    position: fixed;
+    width: 36px;
+    height: 30px;
+    right: 16px !important;
+    top: 16px !important;
+  }
+
 }

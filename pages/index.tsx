@@ -24,11 +24,11 @@ export default function HomePage() {
         <Navbar rightChain={chainId && chainId == APP_CHAIN_ID} isConnected={isConnected} connect={connect} />
         <div className="container">
             <div className="home">
-                <h1>
-                    Concept
-                </h1>
+                <p style={{ fontSize: 24 }}>
+                    Smart contract controlled internet of things && sounds && images && light && voltage && bits && bytes;
+                </p>
                 <p>
-                    Smart contract controlled internet of things and sounds and images and light and voltage and bits and bytes; to be used in time based interactive compositions, permanent installations, spatial design, game mechanics, live performances, having an immutable permanent record of events.
+                    to be used in time based interactive compositions, permanent installations, spatial design, game mechanics, live performances, having an immutable permanent record of events.
                 </p>
                 <p>
                     A smart contract holds “n” amount of parameters which has a min/max integer range.
