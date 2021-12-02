@@ -263,9 +263,29 @@ Note: Beware of modifying this element as it can break the animations - you shou
   }
 
   .team {
+    a {
+      display: block;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
     li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      flex-basis: 33%;
       img {
-        max-width: 64px;
+        max-width: 48px;
+      }
+
+      p {
+        font-size: 10px !important;
+        width: 100%;
+        margin-top: .5em !important;
       }
     }
   }
