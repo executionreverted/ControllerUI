@@ -100,47 +100,47 @@ export default function HomePage() {
                     TEAM
                 </h1>
                 <ul className="team-members">
-                    <a href="https://twitter.com/berkozdemir" target="_blank" rel="norefferer">
+                    <a href="https://twitter.com/berkozdemir" target="_blank" rel="noreferrer">
                         <li>
                             <img src="https://pbs.twimg.com/profile_images/1458250273454018561/7CETcoMd_400x400.jpg" alt="" />
-                            <div>
+                            <p>
                                 BERK
-                            </div>
+                            </p>
                         </li>
                     </a>
-                    <a target="_blank" rel="norefferer" href="https://twitter.com/memorycollect0r">
+                    <a target="_blank" rel="noreferrer" href="https://twitter.com/memorycollect0r">
                         <li>
                             <img src="https://ipfs.infura.io/ipfs/QmPfXnN7gneZu5eVRcZgwMpmfo2XZhQnzWWbpVsAGktG1x" alt="" />
-                            <div>
+                            <p>
                                 MEMORYCOLLECT0R
-                            </div>
+                            </p>
                         </li>
                     </a>
-                    <a href="https://twitter.com/isefatuna" target="_blank" rel="norefferer">
+                    <a href="https://twitter.com/isefatuna" target="_blank" rel="noreferrer">
                         <li>
                             <img src="https://pbs.twimg.com/profile_images/1377347328353390593/Xl_qM96Y_400x400.jpg" alt="" />
-                            <div>
+                            <p>
                                 ISEFATUNA
-                            </div>
+                            </p>
                         </li>
                     </a>
-                    <a href="https://twitter.com/yborayigit" target="_blank" rel="norefferer">
+                    <a href="https://twitter.com/yborayigit" target="_blank" rel="noreferrer">
                         <li>
                             <img src="https://media.discordapp.net/attachments/443527321799098369/915934787808690226/sacma.png?width=582&height=582" alt="" />
-                            <div>
+                            <p>
                                 YBORAYIGIT
-                            </div>
+                            </p>
                         </li>
                     </a>
-                    <a href="https://twitter.com/masal_cabuk" target="_blank" rel="norefferer">
+                    <a href="https://twitter.com/masal_cabuk" target="_blank" rel="noreferrer">
                         <li>
                             <img src="https://pbs.twimg.com/profile_images/1452670531841441799/HNG5Rtzu_400x400.jpg" alt="" />
-                            <div>
+                            <p>
                                 PRINCESS HAZEL
-                            </div>
+                            </p>
                         </li>
                     </a>
-                    
+
                 </ul>
             </div>
         </div>

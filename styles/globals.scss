@@ -16,7 +16,6 @@ a {
   text-decoration: none;
 }
 
-
 .main {
   padding: 1rem;
 }
@@ -215,6 +214,11 @@ Note: Beware of modifying this element as it can break the animations - you shou
     img {
       max-width: 240px;
       border-radius: 50%;
+    }
+    p {
+      font-size: 12px;
+      padding: 0 !important;
+      margin: 0 !important;
     }
   }
 }
