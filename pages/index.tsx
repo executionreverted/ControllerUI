@@ -104,7 +104,7 @@ export default function HomePage() {
                         <li>
                             <img src="https://pbs.twimg.com/profile_images/1458250273454018561/7CETcoMd_400x400.jpg" alt="" />
                             <div>
-                                BERK ÖZDEMİR
+                                BERK
                             </div>
                         </li>
                     </a>
@@ -112,7 +112,7 @@ export default function HomePage() {
                         <li>
                             <img src="https://ipfs.infura.io/ipfs/QmPfXnN7gneZu5eVRcZgwMpmfo2XZhQnzWWbpVsAGktG1x" alt="" />
                             <div>
-                                CANER SEVİNCE
+                                MEMORYCOLLECT0R
                             </div>
                         </li>
                     </a>
@@ -120,7 +120,7 @@ export default function HomePage() {
                         <li>
                             <img src="https://pbs.twimg.com/profile_images/1377347328353390593/Xl_qM96Y_400x400.jpg" alt="" />
                             <div>
-                                İ. SEFA TUNA
+                                ISEFATUNA
                             </div>
                         </li>
                     </a>
@@ -128,7 +128,7 @@ export default function HomePage() {
                         <li>
                             <img src="https://media.discordapp.net/attachments/443527321799098369/915934787808690226/sacma.png?width=582&height=582" alt="" />
                             <div>
-                                Y. BORA YİĞİT
+                                YBORAYIGIT
                             </div>
                         </li>
                     </a>
@@ -136,7 +136,7 @@ export default function HomePage() {
                         <li>
                             <img src="https://pbs.twimg.com/profile_images/1452670531841441799/HNG5Rtzu_400x400.jpg" alt="" />
                             <div>
-                                Y. BORA YİĞİT
+                                PRINCESS HAZEL
                             </div>
                         </li>
                     </a>
