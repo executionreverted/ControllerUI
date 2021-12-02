@@ -132,6 +132,15 @@ export default function HomePage() {
                             </div>
                         </li>
                     </a>
+                    <a href="https://twitter.com/masal_cabuk" target="_blank" rel="norefferer">
+                        <li>
+                            <img src="https://pbs.twimg.com/profile_images/1452670531841441799/HNG5Rtzu_400x400.jpg" alt="" />
+                            <div>
+                                Y. BORA YİĞİT
+                            </div>
+                        </li>
+                    </a>
+                    
                 </ul>
             </div>
         </div>
