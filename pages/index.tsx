@@ -1,12 +1,16 @@
 import { useWeb3React } from "@web3-react/core"
 import Link from "next/link"
 import Navbar from "../components/Menu"
+import Toast from "../components/Toast";
 import useEagerConnect from "../hooks/useEagerConnect";
-import { APP_CHAIN_ID, switchChain } from "../util";
+import { APP_CHAIN_ID, CONTRACT_ADDRESS, switchChain } from "../util";
+import { CONTRACT_ABI } from "../contracts/ABI";
+import useContract from "../hooks/useContract";
 
 export default function HomePage() {
     const triedToEagerConnect = useEagerConnect();
     const { account, library, chainId } = useWeb3React();
+    const contract = useContract(CONTRACT_ADDRESS, CONTRACT_ABI)
 
     const isConnected = typeof account === "string" && !!library;
     const connect = () => {
@@ -21,6 +25,7 @@ export default function HomePage() {
     }
 
     return <>
+        <Toast contract={contract} />
         <Navbar rightChain={chainId && chainId == APP_CHAIN_ID} isConnected={isConnected} connect={connect} />
         <div className="container">
             <div className="home">

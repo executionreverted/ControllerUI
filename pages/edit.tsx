@@ -13,6 +13,7 @@ import { APP_CHAIN_ID, CONTRACT_ADDRESS } from "../util";
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Donut } from 'react-dial-knob'
 import Navbar from "../components/Menu";
+import Toast from "../components/Toast";
 
 
 
@@ -115,6 +116,7 @@ function Edit() {
   }
 
   return <div className="main edit">
+    <Toast contract={contract} />
     <Navbar rightChain={chainId == APP_CHAIN_ID} isConnected={isConnected} connect={connectMetamask} />
     {
       !isConnected && <div className="center">
