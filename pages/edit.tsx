@@ -114,6 +114,32 @@ function Edit() {
     })
   }
 
+  const randomize = () => {
+
+    for (let index = 0; index < 8; index++) {
+      
+      if (Math.random() > 0.5) {
+        setParamActive((p) => {
+          let o = Object.assign({}, p)
+          o[index] = true
+          return o
+        })
+        setParams((p) => {
+          let o = Object.assign({}, p)
+          let n = Math.floor((Math.random() * o[index].maxVal) + o[index].minVal)
+          o[index].value = n
+          return o
+        })
+      } else {
+        setParamActive((p) => {
+          let o = Object.assign({}, p)
+          o[index] = true
+          return o
+        })
+      }
+    }
+
+  }
   return <div className="main edit">
     <Toast contract={contract} />
     <Navbar rightChain={chainId == APP_CHAIN_ID} isConnected={isConnected} connect={connectMetamask} />
@@ -191,6 +217,9 @@ function Edit() {
         }
       </div>
         <div className="center">
+          <button onClick={randomize} className="toggle mt-5">
+            RANDOMIZE
+          </button>
           <button onClick={save} className="toggle mt-5">
             SAVE NEW PARAMETERS
           </button>

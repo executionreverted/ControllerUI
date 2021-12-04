@@ -41,7 +41,7 @@ export const parseBalance = (
 ) => parseFloat(formatUnits(value, decimals)).toFixed(decimalsToDisplay);
 
 
-export const CONTRACT_ADDRESS = "0x8BdDBb962cf4ceBbe4a4015B185b0615B22CBA4C"
+export const CONTRACT_ADDRESS = "0x956cb3c3db5b3cb13b4dc7bfe22d1c7f32c71d5c"
 export const APP_CHAIN_ID = 43113
 export const switchChain = async () => {
   // @ts-ignore
