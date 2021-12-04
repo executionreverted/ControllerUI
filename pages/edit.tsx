@@ -115,29 +115,31 @@ function Edit() {
   }
 
   const randomize = () => {
-
+    const activated = []
+    const values = []
     for (let index = 0; index < 8; index++) {
-      
       if (Math.random() > 0.5) {
-        setParamActive((p) => {
-          let o = Object.assign({}, p)
-          o[index] = true
-          return o
-        })
-        setParams((p) => {
-          let o = Object.assign({}, p)
-          let n = Math.floor((Math.random() * o[index].maxVal) + o[index].minVal)
-          o[index].value = n
-          return o
-        })
+        activated.push(true)
       } else {
-        setParamActive((p) => {
-          let o = Object.assign({}, p)
-          o[index] = true
-          return o
-        })
+        activated.push(false)
       }
     }
+
+    setParamActive((p) => {
+      let o = Object.assign({}, p)
+      for (let index = 0; index < 8; index++) {
+        o[index] = activated[index]
+      }
+      return o
+    })
+    setParams((p) => {
+      let o = Object.assign({}, p)
+      for (let index = 0; index < 8; index++) {
+        let n = Math.floor((Math.random() * o[index].maxVal) + o[index].minVal)
+        o[index].value = n
+      }
+      return o
+    })
 
   }
   return <div className="main edit">
@@ -220,7 +222,7 @@ function Edit() {
           <button onClick={randomize} className="toggle mt-5">
             RANDOMIZE
           </button>
-          <button onClick={save} className="toggle mt-5">
+          <button style={{ marginLeft: "1em" }} onClick={save} className="toggle mt-5">
             SAVE NEW PARAMETERS
           </button>
         </div>
