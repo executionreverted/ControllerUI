@@ -6,7 +6,7 @@ export default function Toast({ contract }) {
     function useToast(id, sender, value, time) {
         console.log(time);
         toast(`${shortenHex(sender, 4)} just changed Parameter ${parseInt(id)} to ${parseInt(value)}. -${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`, {
-            autoClose: 3000
+            autoClose: 4000
         })
     }
 

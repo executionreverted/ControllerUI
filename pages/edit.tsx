@@ -9,13 +9,11 @@ import TokenBalance from "../components/TokenBalance";
 import { CONTRACT_ABI } from "../contracts/ABI";
 import useContract from "../hooks/useContract";
 import useEagerConnect from "../hooks/useEagerConnect";
-import { APP_CHAIN_ID, CONTRACT_ADDRESS } from "../util";
+import { APP_CHAIN_ID, CONTRACT_ADDRESS, switchChain } from "../util";
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Donut } from 'react-dial-knob'
 import Navbar from "../components/Menu";
 import Toast from "../components/Toast";
-
-
 
 
 function Edit() {
@@ -57,7 +55,8 @@ function Edit() {
               parsed.push({
                 value: parseInt(res[index].value),
                 maxVal: parseInt(res[index].maxVal),
-                minVal: parseInt(res[index].minVal)
+                minVal: parseInt(res[index].minVal),
+                name: res[index].name
               })
             }
             setParams(parsed)
@@ -143,6 +142,9 @@ function Edit() {
       <div><div className="knobs-grid">
         {
           knobs?.map(knob => <div key={knob} className="knob-">
+            <p className="knob-label">
+              {params[knob]?.name}
+            </p>
             <Donut
               diameter={100}
               value={params[knob]?.value}
@@ -199,7 +201,4 @@ function Edit() {
 }
 
 export default Edit;
-function switchChain() {
-  throw new Error("Function not implemented.");
-}
 
