@@ -120,8 +120,10 @@ function Edit() {
     for (let index = 0; index < 8; index++) {
       if (Math.random() > 0.5) {
         activated.push(true)
+        values.push(Math.floor((Math.random() * params[index].maxVal) + params[index].minVal))
       } else {
         activated.push(false)
+        values.push(0)
       }
     }
 
@@ -135,8 +137,7 @@ function Edit() {
     setParams((p) => {
       let o = Object.assign({}, p)
       for (let index = 0; index < 8; index++) {
-        let n = Math.floor((Math.random() * o[index].maxVal) + o[index].minVal)
-        o[index].value = n
+        o[index].value = values[index]
       }
       return o
     })
