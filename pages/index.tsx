@@ -79,9 +79,6 @@ export default function HomePage() {
                 <p>
                     Any software that can read OSC can parse the incoming data and control anything. Lights in a room, pitch of sine waves, relay controlled electronics, fog machine, modular synth, ram data of a nes game…
                 </p>
-                <p>
-                    Interaction of users can be gamified in various ways and use an erc20 token as a utility currency.
-                </p>
             </div>
             <div id="#about" className="about">
                 <h1>
@@ -97,8 +94,7 @@ export default function HomePage() {
                     <br />
                     Supercollider reads the data for generating sounds / musical phrases - touchdesigner generate real time visuals. Instruments play alongside.
                     <br />
-                    <br />
-                    There is a section counter in the smart contract, and every 3 minutes it can be changed by a wallet. While this user changes the section, they can determine how many parameters a wallet can edit at once.                </p>
+                </p>
             </div>
             <div id="#team" className="team">
                 <h1>

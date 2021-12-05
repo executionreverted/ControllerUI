@@ -52,16 +52,21 @@ export default function Navbar({ rightChain, isConnected, connect }) {
             <Link href="/">
                 <a id="home" className="menu-item" href="">Home</a>
             </Link>
+
             <Link href="/#about">
                 <a id="" className="menu-item" href="">About</a>
             </Link>
+
             <Link href="/edit">
                 <a id="play" className="menu-item--small" href="">Play</a>
             </Link>
+
             <Link href="/#team">
                 <a id="team" className="menu-item--small" href="">Team</a>
             </Link>
-
+            <a className="menu-item--small" target="_blank" rel="noreferrer" href="https://faucet.avax-test.network/">Testnet Faucet</a>
+            <a className="menu-item--small" target="_blank" rel="noreferrer"
+                href="/1920.png">Doc</a>
 
             {!isConnected && <button onClick={(e) => {
                 e.preventDefault()
