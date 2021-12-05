@@ -92,7 +92,7 @@ export default function HomePage() {
                     8 parameters in contract.
                     <br />
                     <br />
-                    Supercollider reads the data for generating sounds / musical phrases - touchdesigner generate real time visuals. Instruments play alongside.
+                    Supercollider reads the data for generating sounds / musical phrases - TouchDesigner generates real time visuals. Instruments play alongside.
                     <br />
                 </p>
             </div>
