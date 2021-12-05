@@ -53,9 +53,6 @@ export default function Navbar({ rightChain, isConnected, connect }) {
                 <a id="home" className="menu-item" href="">Home</a>
             </Link>
 
-            <Link href="/#about">
-                <a id="" className="menu-item" href="">About</a>
-            </Link>
 
             <Link href="/edit">
                 <a id="play" className="menu-item--small" href="">Play</a>
